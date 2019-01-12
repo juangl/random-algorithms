@@ -46,4 +46,4 @@ function findLargestRectangle(histogram) {
 assert(findLargestRectangle([0, 1, 2, 3, 4, 4, 2]), 10);
 assert(findLargestRectangle([1, 2, 2, 1, 4, 1]), 6);
 
-console.log("\n✅  test passing")
+console.log("\n✅  test passing");
