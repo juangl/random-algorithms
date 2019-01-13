@@ -23,9 +23,9 @@ void merge(vector<T>& arr, int start, int middle, int end) {
   int n2 = end - middle;
   int range = end - start;
 
-  vector<T> L = vector<T>(arr.begin() + start, arr.begin() + start + n1);
+  vector<T> L = vector<T>(arr.begin() + start, arr.begin() + middle + 1);
   vector<T> R =
-      vector<T>(arr.begin() + middle + 1, arr.begin() + middle + 1 + n2);
+      vector<T>(arr.begin() + middle + 1, arr.begin() + end + 1);
 
   int i = 0, j = 0, k;
   for (int k = 0; k <= range; k++) {
