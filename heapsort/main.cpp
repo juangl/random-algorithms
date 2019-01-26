@@ -1,8 +1,7 @@
 #include <vector>
 using namespace std;
 
-#include "heap.h"
-// #include "heap.cpp"
+#include "heap.cpp"
 #include "../utils/printVector.cpp"
 
 int main() {

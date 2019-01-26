@@ -44,7 +44,7 @@ int Heap<T>::right(int i) {
 template <typename T>
 void Heap<T>::buildMaxHeap() {
   int lastNonLeaf = (heapSize / 2) - 1;
-  for (int i = lastNonLeaf; i <= 0; i--) {
+  for (int i = lastNonLeaf; i >= 0; i--) {
     maxHeapity(i);
   }
 }
@@ -62,7 +62,7 @@ void Heap<T>::maxHeapity(int index) {
   }
 
   if (rightChildIndex < heapSize &&
-      (*this)[rightChildIndex > (*this)[largest]]) {
+      (*this)[rightChildIndex] > (*this)[largest]) {
     largest = rightChildIndex;
   }
 
