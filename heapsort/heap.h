@@ -12,8 +12,9 @@ class Heap {
   typename vector<T>::iterator begin();
   typename vector<T>::iterator end();
   T& operator[](int index);
-  int size();
-
+  const T& operator[](int index) const;
+  int size() const;
+  const vector<T>& getSortedArray();
  private:
   void buildMaxHeap();
   void maxHeapity(int index);

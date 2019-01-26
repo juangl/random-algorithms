@@ -1,4 +1,5 @@
 #include "heap.h"
+#include <algorithm>
 #include <initializer_list>
 #include <vector>
 
@@ -27,12 +28,17 @@ T& Heap<T>::operator[](int index) {
 }
 
 template <typename T>
-int Heap<T>::size() {
+const T& Heap<T>::operator[](int index) const {
+  return internalVector[index];
+}
+
+template <typename T>
+int Heap<T>::size() const {
   return heapSize;
 }
 
 #define LEFT(i) (i * 2) + 1
-#define RIGHT(i)  (i * 2) + 2
+#define RIGHT(i) (i * 2) + 2
 
 template <typename T>
 void Heap<T>::buildMaxHeap() {
@@ -65,4 +71,15 @@ void Heap<T>::maxHeapity(int index) {
     (*this)[index] = temp;
     maxHeapity(largest);
   }
+}
+
+template <typename T>
+const vector<T>& Heap<T>::getSortedArray() {
+  for (int i = heapSize; i >= 2; i--) {
+    iter_swap(internalVector.begin(), internalVector.begin() + i - 1);
+    heapSize -= 1;
+    maxHeapity(0);
+  }
+
+  return internalVector;
 }
