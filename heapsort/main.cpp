@@ -1,9 +1,11 @@
-#include <vector>
 #include <iostream>
+#include <vector>
+#include <cassert>
 using namespace std;
 
 #include "../utils/printVector.cpp"
 #include "heap.cpp"
+#include "../utils/isSorted.cpp"
 
 int main() {
   Heap<int> heapTest{
@@ -13,7 +15,9 @@ int main() {
   cout << "heap:\n";
   printVector(heapTest);
 
+  vector<int> sorted = heapTest.getSortedArray();
+  assert(isSorted(sorted));
   cout << "sorted array:\n";
-  printVector(heapTest.getSortedArray());
+  printVector(sorted);
   return 0;
 }
