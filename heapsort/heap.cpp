@@ -31,15 +31,8 @@ int Heap<T>::size() {
   return heapSize;
 }
 
-template <typename T>
-int Heap<T>::left(int i) {
-  return i * 2 + 1;
-}
-
-template <typename T>
-int Heap<T>::right(int i) {
-  return i * 2 + 2;
-}
+#define LEFT(i) (i * 2) + 1
+#define RIGHT(i)  (i * 2) + 2
 
 template <typename T>
 void Heap<T>::buildMaxHeap() {
@@ -51,8 +44,8 @@ void Heap<T>::buildMaxHeap() {
 
 template <typename T>
 void Heap<T>::maxHeapity(int index) {
-  int leftChildIndex = left(index);
-  int rightChildIndex = right(index);
+  int leftChildIndex = RIGHT(index);
+  int rightChildIndex = LEFT(index);
 
   int largest;
   if (leftChildIndex < heapSize && (*this)[leftChildIndex] > (*this)[index]) {

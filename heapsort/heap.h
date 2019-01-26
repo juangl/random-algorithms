@@ -17,8 +17,6 @@ class Heap {
  private:
   void buildMaxHeap();
   void maxHeapity(int index);
-  int left(int i);
-  int right(int i);
   vector<T> internalVector;
   int heapSize;
 };
