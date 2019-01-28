@@ -4,7 +4,7 @@
 using namespace std;
 
 #include "../utils/printVector.cpp"
-#include "heap.cpp"
+#include "../heap/heap.cpp"
 #include "../utils/isSorted.cpp"
 
 int main() {

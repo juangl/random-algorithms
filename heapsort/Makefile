@@ -2,7 +2,7 @@ CC=g++
 MD=mkdir
 CFLAGS=-std=c++17
 
-heapsort: main.cpp heap.cpp
+heapsort: main.cpp ../heap/heap.cpp
 	$(CC) $(CFLAGS) -o $@ $^
 
 .PHONY: clean
