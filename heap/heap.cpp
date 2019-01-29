@@ -8,6 +8,16 @@ using namespace std;
 #define RIGHT(i) (i * 2) + 2
 
 template <typename T>
+bool compareMaxHeap(T a, T b) {
+  return a > b;
+}
+
+template <typename T>
+bool compareMinHeap(T a, T b) {
+  return a < b;
+}
+
+template <typename T, bool compareFn(T, T)>
 class Heap {
  public:
   Heap(initializer_list<T> init) {
@@ -44,14 +54,15 @@ class Heap {
     int rightChildIndex = LEFT(index);
 
     int largest;
-    if (leftChildIndex < heapSize && (*this)[leftChildIndex] > (*this)[index]) {
+    if (leftChildIndex < heapSize &&
+        compareFn((*this)[leftChildIndex], (*this)[index])) {
       largest = leftChildIndex;
     } else {
       largest = index;
     }
 
     if (rightChildIndex < heapSize &&
-        (*this)[rightChildIndex] > (*this)[largest]) {
+        compareFn((*this)[rightChildIndex], (*this)[largest])) {
       largest = rightChildIndex;
     }
 
@@ -65,3 +76,9 @@ class Heap {
   vector<T> internalVector;
   int heapSize;
 };
+
+template <typename T>
+using MaxHeap = Heap<T, compareMaxHeap>;
+
+template <typename T>
+using MinHeap = Heap<T, compareMinHeap>;
