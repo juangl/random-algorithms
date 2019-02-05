@@ -8,14 +8,13 @@ bool uniqueCharsNoDS(const char* str) {
   bool chars[254] = {false};
 
   char currentChar;
-  int offset = 0;
-  while ((currentChar = *(str + offset)) != '\0') {
+  while ((currentChar = *(str)) != '\0') {
     if (chars[currentChar]) {
       return false;
     }
 
     chars[currentChar] = true;
-    offset++;
+    str++;
   }
 
   return true;
