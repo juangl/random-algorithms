@@ -15,16 +15,27 @@ bool isPermutationHasTable(const pair<string, string>& stringPair) {
     return false;
   }
 
-  unordered_map<char, bool> presentChars;
+  unordered_map<char, int> presentCharsA;
+  unordered_map<char, int> presentCharsB;
 
-  for (const char& e : stringPair.first) {
-    presentChars.insert({e, true});
+  for (int i = 0; i < stringPair.first.size(); i++) {
+    char charA = stringPair.first[i];
+    char charB = stringPair.second[i];
+
+    unordered_map<char, int>::const_iterator gotA = presentCharsA.find(charA);
+    unordered_map<char, int>::const_iterator gotB = presentCharsB.find(charB);
+
+    int countA = gotA == presentCharsA.end() ? 1 : gotA->second + 1;
+    int countB = gotB == presentCharsB.end() ? 1 : gotB->second + 1;
+
+    presentCharsA.insert({charA, countA});
+    presentCharsB.insert({charB, countB});
   }
+ 
+  for (auto& u : presentCharsA) {
+    unordered_map<char, int>::const_iterator got = presentCharsB.find(u.first);
 
-  for (const char& u : stringPair.second) {
-    unordered_map<char, bool>::const_iterator got = presentChars.find(u);
-
-    if (got == presentChars.end()) {
+    if (got == presentCharsB.end() || got->second != u.second) {
       return false;
     }
   }
@@ -56,7 +67,6 @@ int main() {
   for (auto& currentPair : stringPairs) {
     cout << "word 1:" << currentPair.first << " word 2: " << currentPair.second
          << endl;
-    // this implementation requires that all the characters are unique
     cout << "test with hash table: " << boolalpha
          << isPermutationHasTable(currentPair) << endl;
     // sorting is the last because it mutates
