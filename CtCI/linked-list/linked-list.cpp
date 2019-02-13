@@ -8,6 +8,7 @@ class Node {
   Node<T>* next = nullptr;
   Node<T>* previous = nullptr;
   T data;
+  Node(T value) : data(value) {}
 };
 
 template <typename T>
@@ -26,8 +27,8 @@ class LinkedListIterator {
     return currentNode;
   }
 
-  Node<T>& operator*() { return currentNode; }
-  Node<T>& operator->() { return currentNode; }
+  T& operator*() { return currentNode->data; }
+  T& operator->() { return currentNode->data; }
 
   bool operator==(LinkedListIterator<T> secondIterator) {
     return secondIterator.currentNode == currentNode;
@@ -43,12 +44,47 @@ class LinkedListIterator {
 
 template <typename T>
 class LinkedList {
+  friend class LinkedListIterator<T>;
+
  public:
-  Node<T>* root = nullptr;
+  Node<T>* root;
   typedef LinkedListIterator<T> iterator;
+
+  LinkedList() {
+    root = new Node<T>;
+    root->next = root;
+    root->previous = root;
+  }
+
+  ~LinkedList() {
+    while (!empty()) {
+      remove(head());
+    }
+
+    delete root;
+  }
+
+  // iterators
   iterator begin() { return root->next; }
   iterator end() { return root->previous; }
 
+  // values
   Node<T>& head() { return root->next; }
   Node<T>& tail() { return root->previous; }
+
+  // operations
+  bool empty() { return root->head == root; }
+
+  void remove(iterator nodeIter) {
+    nodeIter.next.previus = nodeIter.currentNode.previous;
+    nodeIter.previous.next = nodeIter.currentNode.next;
+    delete nodeIter.currentNode;
+    nodeIter.currentNode = nullptr;
+  }
+
+  void add(T value) {
+    Node<T> newNode = new Node<T>(value);
+    root->next->previous = newNode;
+    root->next = newNode;
+  }
 };
