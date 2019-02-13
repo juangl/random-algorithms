@@ -46,8 +46,9 @@ class LinkedList {
  public:
   Node<T>* root = nullptr;
   typedef LinkedListIterator<T> iterator;
-  iterator begin() { return root; }
+  iterator begin() { return root->next; }
   iterator end() { return root->previous; }
 
-  Node<T>& head() { return root; }
+  Node<T>& head() { return root->next; }
+  Node<T>& tail() { return root->previous; }
 };
