@@ -21,17 +21,28 @@ class LinkedListIterator {
   friend class LinkedList<T>;
 
  public:
+  LinkedListIterator() {}
   LinkedListIterator(Node<T>* root) : currentNode(root) {}
   LinkedListIterator<T>& operator++() {
-    Node<T>* temp = currentNode;
     currentNode = currentNode->next;
-    return currentNode;
+    return *this;
+  }
+
+  LinkedListIterator<T>& operator++(int) {
+    LinkedListIterator<T>& temp = *this;
+    this->operator++();
+    return temp;
   }
 
   LinkedListIterator<T>& operator--() {
-    Node<T>* temp = currentNode;
     currentNode = currentNode->previous;
-    return currentNode;
+    return *this;
+  }
+
+  LinkedListIterator<T>& operator--(int) {
+    LinkedListIterator<T>& temp = *this;
+    this->operator--();
+    return temp;
   }
 
   T& operator*() { return currentNode->data; }
