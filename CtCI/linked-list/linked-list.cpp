@@ -1,6 +1,7 @@
-#include <unordered_map>
-
+#include <iostream>
 using namespace std;
+
+namespace LinkedList {
 
 template <typename T>
 class Node {
@@ -8,11 +9,17 @@ class Node {
   Node<T>* next = nullptr;
   Node<T>* previous = nullptr;
   T data;
+  Node() {}
   Node(T value) : data(value) {}
 };
 
 template <typename T>
+class LinkedList;
+
+template <typename T>
 class LinkedListIterator {
+  friend class LinkedList<T>;
+
  public:
   LinkedListIterator(Node<T>* root) : currentNode(root) {}
   LinkedListIterator<T>& operator++() {
@@ -44,8 +51,6 @@ class LinkedListIterator {
 
 template <typename T>
 class LinkedList {
-  friend class LinkedListIterator<T>;
-
  public:
   Node<T>* root;
   typedef LinkedListIterator<T> iterator;
@@ -58,7 +63,7 @@ class LinkedList {
 
   ~LinkedList() {
     while (!empty()) {
-      remove(head());
+      remove(begin());
     }
 
     delete root;
@@ -73,18 +78,31 @@ class LinkedList {
   Node<T>& tail() { return root->previous; }
 
   // operations
-  bool empty() { return root->head == root; }
+  bool empty() { return root->next == root; }
 
   void remove(iterator nodeIter) {
-    nodeIter.next.previus = nodeIter.currentNode.previous;
-    nodeIter.previous.next = nodeIter.currentNode.next;
-    delete nodeIter.currentNode;
+    Node<T>* currentNode = nodeIter.currentNode;
+    currentNode->next->previous = currentNode->previous;
+    currentNode->previous->next = currentNode->next;
+    delete currentNode;
     nodeIter.currentNode = nullptr;
   }
 
   void add(T value) {
-    Node<T> newNode = new Node<T>(value);
+    Node<T>* newNode = new Node<T>(value);
+    newNode->next = root->next;
     root->next->previous = newNode;
     root->next = newNode;
+    newNode->previous = root;
+  }
+
+  void print() {
+    Node<T>* current = root->next;
+    while (current != root) {
+      cout << current->data << " ";
+      current = current->next;
+    }
   }
 };
+
+}  // namespace LinkedList
