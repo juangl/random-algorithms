@@ -83,11 +83,11 @@ class LinkedList {
   iterator end() { return root->previous; }
 
   // values
-  Node& head() { return root->next; }
-  Node& tail() { return root->previous; }
+  T& head() { return root->next->data; }
+  T& tail() { return root->previous->data; }
 
   // operations
-  bool empty() { return root->next == root; }
+  bool empty() const { return root->next == root; }
 
   void remove(iterator nodeIter) {
     Node* currentNode = nodeIter.currentNode;
@@ -105,7 +105,7 @@ class LinkedList {
     newNode->previous = root;
   }
 
-  void print() {
+  void print() const {
     Node* current = root->next;
     while (current != root) {
       cout << current->data << " ";
