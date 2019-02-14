@@ -1,8 +1,11 @@
+#include <initializer_list>
 #include <iostream>
 using namespace std;
 
-namespace LinkedList {
+template <typename T>
+class LinkedList;
 
+namespace LinkedListUtils {
 template <typename T>
 class Node {
  public:
@@ -12,9 +15,6 @@ class Node {
   Node() {}
   Node(T value) : data(value) {}
 };
-
-template <typename T>
-class LinkedList;
 
 template <typename T>
 class LinkedListIterator {
@@ -49,16 +49,25 @@ class LinkedListIterator {
   Node<T>* currentNode;
 };
 
+}  // namespace LinkedListUtils
+
 template <typename T>
 class LinkedList {
  public:
-  Node<T>* root;
-  typedef LinkedListIterator<T> iterator;
+  typedef LinkedListUtils::Node<T> Node;
+  typedef LinkedListUtils::LinkedListIterator<T> iterator;
+  Node* root;
 
   LinkedList() {
-    root = new Node<T>;
+    root = new Node;
     root->next = root;
     root->previous = root;
+  }
+
+  LinkedList(const initializer_list<T>& init) : LinkedList() {
+    for (auto& e : init) {
+      add(e);
+    }
   }
 
   ~LinkedList() {
@@ -74,14 +83,14 @@ class LinkedList {
   iterator end() { return root->previous; }
 
   // values
-  Node<T>& head() { return root->next; }
-  Node<T>& tail() { return root->previous; }
+  Node& head() { return root->next; }
+  Node& tail() { return root->previous; }
 
   // operations
   bool empty() { return root->next == root; }
 
   void remove(iterator nodeIter) {
-    Node<T>* currentNode = nodeIter.currentNode;
+    Node* currentNode = nodeIter.currentNode;
     currentNode->next->previous = currentNode->previous;
     currentNode->previous->next = currentNode->next;
     delete currentNode;
@@ -89,7 +98,7 @@ class LinkedList {
   }
 
   void add(T value) {
-    Node<T>* newNode = new Node<T>(value);
+    Node* newNode = new Node(value);
     newNode->next = root->next;
     root->next->previous = newNode;
     root->next = newNode;
@@ -97,12 +106,10 @@ class LinkedList {
   }
 
   void print() {
-    Node<T>* current = root->next;
+    Node* current = root->next;
     while (current != root) {
       cout << current->data << " ";
       current = current->next;
     }
   }
 };
-
-}  // namespace LinkedList
