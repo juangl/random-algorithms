@@ -77,7 +77,7 @@ class LinkedList {
 
   LinkedList(const initializer_list<T>& init) : LinkedList() {
     for (auto& e : init) {
-      add(e);
+      push_back(e);
     }
   }
 
@@ -91,7 +91,7 @@ class LinkedList {
 
   // iterators
   iterator begin() { return root->next; }
-  iterator end() { return root->previous; }
+  iterator end() { return root; }
 
   // values
   T& head() { return root->next->data; }
@@ -108,12 +108,20 @@ class LinkedList {
     nodeIter.currentNode = nullptr;
   }
 
-  void add(T value) {
+  void push_front(T value) {
     Node* newNode = new Node(value);
     newNode->next = root->next;
     root->next->previous = newNode;
     root->next = newNode;
     newNode->previous = root;
+  }
+
+  void push_back(T value) {
+    Node* newNode = new Node(value);
+    newNode->next = root;
+    newNode->previous = root->previous;
+    root->previous->next = newNode;
+    root->previous = newNode;
   }
 
   void print() const {
