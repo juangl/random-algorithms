@@ -2,6 +2,7 @@
 #include <utility>
 using namespace std;
 
+#include "../../utils/printVector.cpp"
 #include "../linked-list/linked-list.cpp"
 
 typedef LinkedList<int> IntLinkedList;
@@ -27,12 +28,12 @@ void partition(IntLinkedList& list, int x) {
 int main() {
   IntLinkedList list{3, 5, 8, 5, 10, 2, 1};
 
-  list.print();
+  printIter(list);
 
-  cout << "\n\n";
+  cout << "\n";
 
   partition(list, 5);
+  printIter(list);
 
-  list.print();
   return 0;
 }

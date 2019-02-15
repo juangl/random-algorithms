@@ -12,3 +12,11 @@ void printVector(const T& vec) {
   }
   cout << endl;
 }
+
+template <class T>
+void printIter(const T& vec) {
+  for (const auto& e : vec) {
+    cout << e << " ";
+  }
+  cout << endl;
+}

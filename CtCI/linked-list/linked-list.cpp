@@ -48,6 +48,9 @@ class LinkedListIterator {
   T& operator*() { return currentNode->data; }
   T& operator->() { return currentNode->data; }
 
+  const T& operator*() const { return currentNode->data; }
+  const T& operator->() const { return currentNode->data; }
+
   bool operator==(LinkedListIterator<T> secondIterator) {
     return secondIterator.currentNode == currentNode;
   }
@@ -92,6 +95,9 @@ class LinkedList {
   // iterators
   iterator begin() { return root->next; }
   iterator end() { return root; }
+
+  const iterator begin() const { return root->next; }
+  const iterator end() const { return root; }
 
   // values
   T& head() { return root->next->data; }
