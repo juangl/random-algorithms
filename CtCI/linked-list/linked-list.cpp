@@ -106,6 +106,9 @@ class LinkedList {
   // operations
   bool empty() const { return root->next == root; }
 
+  void remove_front() { remove(root->next); }
+  void remove_pack() { remove(root->previous); }
+
   void remove(iterator nodeIter) {
     Node* currentNode = nodeIter.currentNode;
     currentNode->next->previous = currentNode->previous;
