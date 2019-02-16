@@ -23,22 +23,41 @@ class LinkedListIterator {
  public:
   LinkedListIterator() {}
   LinkedListIterator(Node<T>* root) : currentNode(root) {}
+
   LinkedListIterator<T>& operator++() {
     currentNode = currentNode->next;
     return *this;
   }
-
   LinkedListIterator<T>& operator++(int) {
     LinkedListIterator<T>& temp = *this;
     this->operator++();
     return temp;
   }
 
+  LinkedListIterator<T>& operator+(int op) {
+    if (op == 1) {
+      return currentNode->next;
+    } else if (op == -1) {
+      return currentNode->previous;
+    } else {
+      throw runtime_error("an intiger in the range of [-1, 1] expected.");
+    }
+  }
+
+  LinkedListIterator<T>& operator-(int op) {
+    if (op == 1) {
+      return currentNode->previous;
+    } else if (op == -1) {
+      return currentNode->next;
+    } else {
+      throw runtime_error("an intiger in the range of [-1, 1] expected.");
+    }
+  }
+
   LinkedListIterator<T>& operator--() {
     currentNode = currentNode->previous;
     return *this;
   }
-
   LinkedListIterator<T>& operator--(int) {
     LinkedListIterator<T>& temp = *this;
     this->operator--();
