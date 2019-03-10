@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 #include "node.cpp"
 
 using namespace std;
@@ -7,7 +8,8 @@ const int MAX_VERTICES = 6;
 
 class Graph {
  public:
-  Graph() {}
+  typedef vector<Node*> NodeList;
+  Graph() : vertices(MAX_VERTICES) {}
 
   void addNode(Node* x) {
     if (count < MAX_VERTICES) {
@@ -17,7 +19,10 @@ class Graph {
       cerr << "Graph full";
     }
   }
+
+  NodeList getNodes() { return vertices; }
+
  private:
-  Node* vertices[MAX_VERTICES];
+  NodeList vertices;
   int count = 0;
 };

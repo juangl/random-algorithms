@@ -1,27 +1,29 @@
+
+#include <vector>
+using namespace std;
+
 class Node {
  public:
-  Node() : adjacentCount(0) {}
-  Node(const char* vertex, int adjacentLength)
-      : vertex(vertex), adjacentCount(0), adjacentLength(adjacentLength) {
-    adjacent = new Node* [adjacentLength] { nullptr };
-  }
+  typedef vector<Node*> NodeList;
 
-  ~Node() { delete[] adjacent; }
+  Node(const char* vertex, int length) : vertex(vertex), adjacentLength(length) {}
 
   void addAdjecent(Node* x) {
-    if (adjacentCount < adjacentLength) {
-      adjacent[adjacentCount] = x;
-      adjacentCount++;
+    if (adjacent.size() < adjacentLength) {
+      adjacent.push_back(x);
     }
   }
 
-  Node** getAdjacent() { return adjacent; }
+  NodeList getAdjacent() { return adjacent; }
 
   const char* getVertex() { return vertex; }
 
+  bool getVisited() { return visited; }
+  void setVisited(bool val) { visited = val; }
+
  private:
-  Node** adjacent;
-  int adjacentCount;
+  NodeList adjacent;
   int adjacentLength;
   const char* vertex;
+  bool visited = false;
 };
