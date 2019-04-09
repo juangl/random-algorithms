@@ -1,6 +1,7 @@
 #include <iomanip>
 #include <iostream>
 #include <queue>
+#include <stack>
 #include <vector>
 using namespace std;
 
@@ -16,7 +17,7 @@ uint32_t getNext(uint32_t number) {
       number = setBitRight(number, i + 1, true);
       break;
     } else if (!currentPos) {
-      available0s.push(currentPos);
+      available0s.push(i);
     } else if (currentPos && !available0s.empty()) {
       int exchangePos = available0s.front();
       available0s.pop();
@@ -31,7 +32,33 @@ uint32_t getNext(uint32_t number) {
 }
 
 uint32_t getPrevious(uint32_t number) {
-  // WIP
+  stack<int> available0s;
+  stack<int> toMove1s;
+
+  for (int i = 0; i < 31; i++) {
+    bool currentPos = testPosRight(number, i);
+    bool nextPos = testPosRight(number, i + 1);
+    if (!currentPos && nextPos) {
+      number = setBitRight(number, i, true);
+      number = setBitRight(number, i + 1, false);
+
+      while (!toMove1s.empty()) {
+        int onePos = toMove1s.top();
+        int zeroPos = available0s.top();
+
+        toMove1s.pop();
+        available0s.pop();
+        number = setBitRight(number, onePos, false);
+        number = setBitRight(number, zeroPos, true);
+      }
+      break;
+    } else if (!currentPos) {
+      available0s.push(i);
+    } else if (currentPos) {
+      toMove1s.push(i);
+    }
+  }
+
   return number;
 }
 
